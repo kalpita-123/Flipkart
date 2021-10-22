@@ -6,11 +6,12 @@ Library  SeleniumLibrary
 Observe user is able to test sanity flow
      Given User Launch browser for flipkart
            User Enter Mobile Number and password to login
-           User click on electronics section
-           User select product
-           User add item to cart
-           User go back to homepage
-           User go to cart
+           User clicks on Search bar and Search mobiles
+           User clicks on device
+           Click on add to cart
+           User go to homepage
+           User check and verify device is in cart or not
+
 
 
 *** Keywords ***
@@ -26,29 +27,30 @@ User Enter Mobile Number and password to login
     input text  ${password}  kalpita
     click button  ${submit}
     sleep  5s
-User click on electronics section
-    mouse over   ${Electronics}
-    sleep  5s
-    mouse over  link:Powerbank
-    click link  link:Powerbank
-    sleep  5s
-User select product
-    click element  ${product}
-    sleep  5s
-    Switch window  locator=NEW
-    sleep  2s
-User add item to cart
-    execute javascript  window.scrollTo(0,200)
-    click button    ${ADD TO CART}
-    sleep  2s
-User go back to homepage
-    click element  ${Homepage}
-    sleep  2s
-User go to cart
-    click element    ${go to cart}
-    sleep  10s
-    close browser
+User clicks on Search bar and Search mobiles
+    Wait Until Page Contains Element  class:_3704LK  timeout=30s
+    Click Element  class:_3704LK
+    Input Text  class:_3704LK  mobiles
+    Wait Until Page Contains Element  class:L0Z3Pu  timeout=30s
+    click element  class:L0Z3Pu
 
+
+User clicks on device
+    Wait Until Page Contains Element  class:_4rR01T  timeout=20s
+    click element  class:_4rR01T
+    switch window  locator=NEW
+
+Click on add to cart
+    Execute JavaScript    window.scrollTo(0,300)
+    click button  xpath://*[@id="container"]/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[1]/button
+
+User go to homepage
+    click element   class:_2xm1JU
+
+User check and verify device is in cart or not
+    Wait Until Page Contains  Cart  timeout=20s
+    click element   class:_3SkBxJ
+    Close Browser
 
 
 
@@ -57,9 +59,7 @@ User go to cart
 ${Mobile Number}=  xpath=/html/body/div[2]/div/div/div/div/div[2]/div/form/div[1]/input
 ${password}=  xpath=/html/body/div[2]/div/div/div/div/div[2]/div/form/div[2]/input
 ${submit}=  xpath=/html/body/div[2]/div/div/div/div/div[2]/div/form/div[4]/button
-${Electronics}=  xpath=//*[@id="container"]/div/div[2]/div/div/div[5]/a/div[2]/div/div
 ${product}=  xpath=//*[@id="container"]/div/div[3]/div[1]/div[2]/div[2]/div/div[1]/div/a[2]
 ${ADD TO CART}=  xpath=//*[@id="container"]/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[1]/button
 ${Homepage}=   xpath=//*[@id="container"]/div/div[1]/div[1]/div[2]/div[1]/div/a/img
 ${go to cart}=  xpath=//*[@id="container"]/div/div[1]/div[1]/div[2]/div[5]/div/div/a
-
